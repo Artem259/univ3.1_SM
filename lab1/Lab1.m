@@ -8,19 +8,20 @@ dT = 0.01;
 Y = dlmread('f8.txt', ' '); % читання файлу у масив вимірів сигналу
 Y = Y(1:end-1);
 L = length(Y);
-t = (0:L-1)*dT; % генератор масиву моментів часу
 
-figure
+t = (0:L-1)*dT; % формування масиву моментів часу
+
+tf = (0:L-1); % формування масиву частот
+tf = tf(1:L/2);
+
+figure('Name','Data initial plot');
 plot(t, Y), grid
 
 Yf = fft(Y)/L; % перетворення Фур'є
 Yf = abs(Yf);
 Yf = Yf(1:L/2);
 
-tf = (0:L-1); % формування масиву частот
-tf = tf(1:L/2);
-
-figure
+figure('Name','Fourier transform plot');
 plot(tf,Yf), grid
 
 % локальні максимуми модуля перетворення Фур'є:
@@ -46,5 +47,5 @@ resY = A(1).*t.^3 + A(2).*t.^2 + A(3).*t + A(4).*f_sin +A(5);
 
 err = sum((resY-Y).^2) % похибка
 
-figure
+figure('Name','Data approximate plot');
 plot(t, resY), grid
