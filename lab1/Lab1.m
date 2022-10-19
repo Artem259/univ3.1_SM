@@ -33,19 +33,19 @@ f = i*Fs
 
 f_sin = sin(2*pi*f*t);
 
-M = [sum(t.^6), sum(t.^5), sum(t.^4), sum(f_sin.*t.^3), sum(t.^3);
-     sum(t.^5), sum(t.^4), sum(t.^3), sum(f_sin.*t.^2), sum(t.^2);
-     sum(t.^4), sum(t.^3), sum(t.^2), sum(f_sin.*t),    sum(t);
+M = [sum(t.^6),        sum(t.^5),        sum(t.^4),     sum(f_sin.*t.^3),  sum(t.^3);
+     sum(t.^5),        sum(t.^4),        sum(t.^3),     sum(f_sin.*t.^2),  sum(t.^2);
+     sum(t.^4),        sum(t.^3),        sum(t.^2),     sum(f_sin.*t),     sum(t);
      sum(f_sin.*t.^3), sum(f_sin.*t.^2), sum(f_sin.*t), sum(f_sin.*f_sin), sum(L*f_sin);
-     sum(t.^3), sum(t.^2), sum(t), sum(L*f_sin), L];
+     sum(t.^3),        sum(t.^2),        sum(t),        sum(L*f_sin),      L];
 
 c = [sum(Y.*t.^3), sum(Y.*t.^2), sum(Y.*t), sum(Y.*f_sin),  sum(Y)];
 
 A = (M\c')'
 
-resY = A(1).*t.^3 + A(2).*t.^2 + A(3).*t + A(4).*f_sin +A(5);
+resY = A(1).*t.^3 + A(2).*t.^2 + A(3).*t + A(4).*f_sin + A(5);
 
-err = sum((resY-Y).^2) % похибка
+F = sum((resY-Y).^2)/2 % функціонал похибки
 
 figure('Name','Data approximate plot');
 plot(t, resY), grid
