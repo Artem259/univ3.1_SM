@@ -68,16 +68,16 @@ end
 % ------------------------------------------
 
 function res = Approximation(A, d)
-    res = A' * (A*A' + (d^2)*ones(size(A,1)))^(-1);
+    res = A' * (A*A' + (d^2)*eye(size(A,1)))^(-1);
 end
 
 function res = Inverse_with_Moor(A)
-    d = 10^6;
+    d = 10.0;
     A_curr = Approximation(A, d);
     while 1
         d = d/2;
         A_next = Approximation(A, d);
-        if (norm(A_next-A_curr) >= eps)
+        if (norm(A_next-A_curr) < eps)
             break
         end
         A_curr = A_next;
